@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CFP Helper</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <h1>CFP Helper</h1>
+      <div class="topbar-actions">
+        <button type="button" id="refresh" class="icon-btn" aria-label="Refresh from GitHub" title="Refresh from GitHub">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 4v7h-7" /></svg>
+        </button>
+        <button type="button" id="settings-toggle" class="icon-btn" aria-label="Settings" aria-expanded="false" aria-controls="settings" title="Settings">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z" /></svg>
+        </button>
+      </div>
+    </header>
+
+    <form id="settings" class="settings" hidden>
+      <h2>Repository</h2>
+      <div class="field-row">
+        <label>Owner <input name="owner" required autocomplete="off" spellcheck="false" /></label>
+        <label>Repo <input name="repo" required autocomplete="off" spellcheck="false" /></label>
+      </div>
+      <label>Branch <input name="branch" placeholder="HEAD (default branch)" autocomplete="off" spellcheck="false" /></label>
+      <label>
+        GitHub token <span class="hint">(optional, for private repos)</span>
+        <input name="token" type="password" autocomplete="off" spellcheck="false" />
+      </label>
+      <p class="hint">The token is stored only in this browser's local extension storage.</p>
+      <div class="settings-actions">
+        <button type="button" id="settings-cancel" class="btn">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save &amp; reload</button>
+      </div>
+    </form>
+
+    <div role="tablist" aria-label="Content" class="tabs">
+      <button type="button" role="tab" id="tab-talks" aria-controls="panel-talks" aria-selected="true">
+        Talks <span class="count" id="talk-count"></span>
+      </button>
+      <button type="button" role="tab" id="tab-bio" aria-controls="panel-bio" aria-selected="false" tabindex="-1">
+        Bio
+      </button>
+    </div>
+
+    <main>
+      <section id="panel-talks" role="tabpanel" aria-labelledby="tab-talks">
+        <div class="toolbar">
+          <label class="visually-hidden" for="search">Search talks</label>
+          <input id="search" type="search" placeholder="Search talks…" autocomplete="off" />
+          <button type="button" id="expand-all" class="btn btn-small">Expand all</button>
+        </div>
+        <ul id="talk-list" class="list"></ul>
+        <p id="no-results" class="empty" hidden>No talks match your search.</p>
+      </section>
+
+      <section id="panel-bio" role="tabpanel" aria-labelledby="tab-bio" hidden>
+        <ul id="bio-list" class="list"></ul>
+      </section>
+    </main>
+
+    <footer class="status">
+      <span id="status" role="status"></span>
+      <a id="repo-link" target="_blank" rel="noopener">Open repo</a>
+    </footer>
+
+    <div id="announcer" class="visually-hidden" aria-live="polite"></div>
+
+    <template id="talk-template">
+      <li class="card">
+        <details>
+          <summary>
+            <span class="card-title"></span>
+            <span class="badge" hidden></span>
+          </summary>
+          <div class="card-body">
+            <div class="copy-row">
+              <button type="button" class="btn btn-small" data-copy="title">Copy title</button>
+              <button type="button" class="btn btn-small btn-primary" data-copy="body">Copy body</button>
+              <button type="button" class="btn btn-small" data-copy="all">Copy title + body</button>
+            </div>
+            <div class="sections"></div>
+            <p class="file-path"></p>
+          </div>
+        </details>
+      </li>
+    </template>
+
+    <template id="section-template">
+      <div class="section">
+        <div class="section-head">
+          <h3></h3>
+          <button type="button" class="btn btn-small">Copy</button>
+        </div>
+        <div class="text"></div>
+      </div>
+    </template>
+
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>

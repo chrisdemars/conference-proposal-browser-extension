@@ -1,0 +1,36 @@
+{
+  "manifest_version": 3,
+  "name": "CFP Helper",
+  "version": "1.0.0",
+  "description": "Quickly copy your conference talk proposals and bio from your GitHub repo into CFP forms.",
+  "action": {
+    "default_title": "CFP Helper",
+    "default_popup": "src/popup.html",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png",
+      "48": "icons/icon-48.png",
+      "128": "icons/icon-128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "permissions": ["storage", "clipboardWrite"],
+  "host_permissions": [
+    "https://api.github.com/*",
+    "https://raw.githubusercontent.com/*"
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "cfp-helper@chrisdemars",
+      "strict_min_version": "115.0",
+      "data_collection_permissions": {
+        "required": ["none"]
+      }
+    }
+  }
+}
